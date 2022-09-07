@@ -1,29 +1,26 @@
 version: "3.8"
 services:
   spring-boot:
-    build: ./
+    build: .
+    restart: always
     ports:
       - "8081:8080"
     depends_on:
-      - mysql
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/user?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: spring
-    restart: always
+      - mysqldb
     networks:
       - comment
-
-  mysql:
-    image: mysql:latest
+  mysqldb:
+    image: mysql:5.7
+    restart: always
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=spring
+      MYSQL_DATABASE: customer
+      MYSQL_USER: rasit
+      MYSQL_PASSWORD: 123456789
+      MYSQL_ROOT_PASSWORD: 123456789
     networks:
       - comment
-    restart: always
-
 networks:
   comment:
     driver: bridge
